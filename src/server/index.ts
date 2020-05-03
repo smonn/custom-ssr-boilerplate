@@ -5,7 +5,7 @@ let app = require("./app").default;
 
 if (module.hot) {
   module.hot.accept("./app", () => {
-    console.log("🔄 HMR reloading `./app`...");
+    console.log("HMR reloading `./app`...");
     try {
       app = require("./app").default;
     } catch (err) {
@@ -13,11 +13,11 @@ if (module.hot) {
     }
   });
 
-  console.info("🔥 Server-side HMR enabled!");
+  console.log("Server-side HMR enabled!");
 }
 
 export default express()
   .use((req, res) => app.handle(req, res))
   .listen(port, () => {
-    console.log(`🚀 Launched at http://localhost:${port}`);
+    console.log(`Launched at http://localhost:${port}`);
   });

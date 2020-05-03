@@ -4,6 +4,7 @@ import path from "path";
 import StartServerWebpackPlugin from "start-server-webpack-plugin";
 import webpack from "webpack";
 import nodeExternals from "webpack-node-externals";
+import WebpackBar from "webpackbar";
 
 const dev = process.env.NODE_ENV !== "production";
 const src = path.resolve(__dirname, "src");
@@ -13,6 +14,8 @@ const config: webpack.Configuration = {
   context: __dirname,
   mode: dev ? "development" : "production",
   devtool: dev ? "eval-source-map" : undefined,
+  watch: dev,
+  stats: dev ? "errors-warnings" : "normal",
   entry: {
     server: dev
       ? ["webpack/hot/signal", path.resolve(src, "server")]
@@ -33,6 +36,8 @@ const config: webpack.Configuration = {
   ],
   plugins: dev
     ? [
+        new WebpackBar(),
+        new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(),
         new ForkTsCheckerWebpackPlugin(),
         new StartServerWebpackPlugin({
