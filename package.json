@@ -2,14 +2,11 @@
   "name": "webpack-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "webpack --config ./webpack.config.server.ts",
     "build": "NODE_ENV=production webpack --config ./webpack.config.server.ts",
     "start": "NODE_ENV=production node dist/server.js"
   },
-  "keywords": [],
-  "author": "Simon Ingeson <simon@ingeson.se> (https://www.simoningeson.com)",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1"
