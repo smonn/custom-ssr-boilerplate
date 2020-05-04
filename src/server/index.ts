@@ -1,23 +1,28 @@
 import express from "express";
+import debugFactory from "debug";
+import parsePort from "../shared/utils/parsePort";
 
-const port = process.env.PORT || "3000";
+const debug = debugFactory("server:index");
+const port = parsePort(process.env.PORT);
 let app = require("./app").default;
 
 if (module.hot) {
   module.hot.accept("./app", () => {
-    console.log("HMR reloading `./app`...");
+    debug("HMR reloading `./app`...");
     try {
       app = require("./app").default;
     } catch (err) {
-      console.error(err);
+      debug(err);
     }
   });
 
-  console.log("Server-side HMR enabled!");
+  debug("Server-side HMR enabled!");
 }
 
-export default express()
-  .use((req, res) => app.handle(req, res))
-  .listen(port, () => {
-    console.log(`Launched at http://localhost:${port}`);
-  });
+// const server = http.createServer((req, res) => app.handle(req, res));
+const server = express().use((req, res) => app.handle(req, res));
+server.listen(port, () => {
+  debug(`Launched at http://localhost:${port}`);
+});
+
+export default server;
