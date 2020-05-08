@@ -1,5 +1,8 @@
-import React from "react";
+import React from 'react';
+import { hot } from 'react-hot-loader/root';
 
-export default function App() {
+function App(): JSX.Element {
   return <div>Hello, World!</div>;
 }
+
+export default hot(App);
