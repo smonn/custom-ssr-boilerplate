@@ -1,5 +1,4 @@
 import LoadableWebpackPlugin from '@loadable/webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import path from 'path';
 import merge from 'webpack-merge';
 import parsePort from '../src/shared/utils/parsePort';
@@ -37,17 +36,13 @@ const client = merge(shared, {
     : undefined,
   plugins: DEV
     ? [
-        new ForkTsCheckerWebpackPlugin({
-          async: false,
-          eslint: true,
-        }),
         new LoadableWebpackPlugin({
           writeToDisk: {
             filename: path.resolve(DIST, 'static'),
           },
         }),
       ]
-    : [new ForkTsCheckerWebpackPlugin(), new LoadableWebpackPlugin()],
+    : [new LoadableWebpackPlugin()],
 });
 
 export default client;

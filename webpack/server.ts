@@ -1,4 +1,3 @@
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import path from 'path';
 import StartServerWebpackPlugin from 'start-server-webpack-plugin';
 import webpack from 'webpack';
@@ -32,10 +31,6 @@ const server = merge(shared, {
   plugins: DEV
     ? [
         new webpack.HotModuleReplacementPlugin(),
-        new ForkTsCheckerWebpackPlugin({
-          async: false,
-          eslint: true,
-        }),
         new StartServerWebpackPlugin({
           name: 'server.js',
           nodeArgs: process.env.INSPECT
@@ -44,7 +39,7 @@ const server = merge(shared, {
           signal: true,
         }),
       ]
-    : [new ForkTsCheckerWebpackPlugin()],
+    : [],
 });
 
 export default server;

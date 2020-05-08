@@ -1,3 +1,7 @@
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCssPlugin from 'optimize-css-assets-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import merge from 'webpack-merge';
 import { DEV } from './constants';
 
@@ -12,15 +16,40 @@ const shared = merge({
       'react-dom': '@hot-loader/react-dom',
     },
   },
+  optimization: DEV
+    ? undefined
+    : {
+        minimizer: [new TerserPlugin(), new OptimizeCssPlugin()],
+      },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        use: ['babel-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: DEV,
+              reloadAll: true,
+            },
+          },
+          'css-loader',
+        ],
       },
     ],
   },
+  plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      eslint: true,
+    }),
+    new MiniCssExtractPlugin(),
+  ],
 });
 
 export default shared;

@@ -57,7 +57,7 @@ app.get('/*', (req, res) => {
     ${extractor.getStyleTags(attrs)}
   </head>
   <body>
-    <div id="root">${markup}</div>
+    <div id="app">${markup}</div>
     ${extractor.getScriptTags(attrs)}
   </body>
   </html>

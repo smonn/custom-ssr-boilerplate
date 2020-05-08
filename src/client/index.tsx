@@ -4,9 +4,9 @@ import { loadableReady } from '@loadable/component';
 import App from '../shared/components/App';
 
 loadableReady(() => {
-  hydrate(<App />, document.getElementById('root'));
+  hydrate(<App />, document.getElementById('app'));
 });
 
-// if (module.hot) {
-//   module.hot.accept();
-// }
+if (module.hot) {
+  module.hot.accept();
+}
