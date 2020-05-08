@@ -37,6 +37,7 @@ const client = merge(shared, {
   plugins: DEV
     ? [
         new LoadableWebpackPlugin({
+          // This is required for loadable to pick up the client side assets
           writeToDisk: {
             filename: path.resolve(DIST, 'static'),
           },
