@@ -11,9 +11,9 @@ const client = merge(shared, {
   name: 'client',
   devtool: DEV ? 'eval-source-map' : 'source-map',
   entry: {
-    client: DEV
-      ? ['react-hot-loader/patch', path.resolve(SRC, 'client')]
-      : ['react-hot-loader/patch', path.resolve(SRC, 'client')],
+    app: DEV
+      ? ['react-hot-loader/patch', path.resolve(SRC, 'client', 'app')]
+      : ['react-hot-loader/patch', path.resolve(SRC, 'client', 'app')],
   },
   target: 'web',
   output: {

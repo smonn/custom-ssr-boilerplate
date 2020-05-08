@@ -1,18 +1,13 @@
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
-import compression from 'compression';
 import debugFactory from 'debug';
-import express from 'express';
-import helmet from 'helmet';
+import { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import App from '../shared/components/App';
-import HttpError from './HttpError';
 
 const DEV = process.env.NODE_ENV !== 'production';
 const publicPath = DEV ? 'http://localhost:3001/static/' : '/static/';
-const debug = debugFactory('server:app');
-const app = express();
+const debug = debugFactory('server:renderHTML');
 const staticPath = path.resolve('dist', 'static');
 const statsFile = path.resolve(staticPath, 'loadable-stats.json');
 const attrs = DEV
@@ -21,32 +16,39 @@ const attrs = DEV
     }
   : {};
 
-app.use(helmet());
-app.use(compression());
-app.use(express.static('public'));
-app.use(
-  '/static',
-  express.static(staticPath, {
-    fallthrough: false,
-  })
-);
+export interface RenderOptions<P> {
+  entrypoints: string[];
+  Component: React.ComponentType<P>;
+  props: P;
+  req: Request;
+  res: Response;
+  next: NextFunction;
+}
 
-app.get('/*', (req, res) => {
+export interface RenderResult {
+  html: string;
+}
+
+export default function renderHTML<P>({
+  entrypoints,
+  Component,
+  props,
+}: RenderOptions<P>): RenderResult {
   const extractor = new ChunkExtractor({
     statsFile,
-    entrypoints: ['client'],
+    entrypoints,
     publicPath,
   });
 
-  debug('start render content');
+  debug('start renderToString');
   const markup = renderToString(
     <ChunkExtractorManager extractor={extractor}>
-      <App />
+      <Component {...props} />
     </ChunkExtractorManager>
   );
-  debug('end render content');
+  debug('end renderToString');
 
-  res.send(`
+  const html = `
   <!DOCTYPE html>
   <html>
   <head>
@@ -61,25 +63,7 @@ app.get('/*', (req, res) => {
     ${extractor.getScriptTags(attrs)}
   </body>
   </html>
-  `);
-});
+  `;
 
-app.use((req, res, next) => {
-  next(new HttpError(404, `Not Found: ${req.url}`));
-});
-
-app.use(
-  (
-    err: any, // eslint-disable-line @typescript-eslint/no-explicit-any
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
-  ) => {
-    res
-      .status(err.status || 500)
-      .type('text/plain')
-      .send(err.message);
-  }
-);
-
-export default app;
+  return { html };
+}
