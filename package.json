@@ -1,7 +1,7 @@
 {
-  "name": "webpack-express",
+  "name": "custom-ssr-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "Custom SSR with TypeScript, React, Webpack, and Express",
   "scripts": {
     "clean": "rimraf dist",
     "dev:server": "cross-env DEBUG=server:*,shared:* webpack --env.target=server",
@@ -81,6 +81,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:smonn/webpack-express.git"
+    "url": "git@github.com:smonn/custom-ssr-boilerplate.git"
   }
 }
