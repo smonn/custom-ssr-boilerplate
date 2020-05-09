@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './styles.css';
 
 function Counter(): JSX.Element {
   const [count, setCount] = useState(0);
@@ -8,7 +9,9 @@ function Counter(): JSX.Element {
     <>
       <button onClick={update(-5)}>--</button>
       <button onClick={update(-1)}>-</button>
-      <span data-testid="count">{count}</span>
+      <span className="count" data-testid="count">
+        {count}
+      </span>
       <button onClick={update(1)}>+</button>
       <button onClick={update(5)}>++</button>
     </>

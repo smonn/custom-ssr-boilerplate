@@ -1,7 +1,7 @@
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import OptimizeCssPlugin from 'optimize-css-assets-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import merge from 'webpack-merge';
 import { DEV } from './constants';
 
@@ -29,7 +29,8 @@ const shared = merge({
         use: ['babel-loader'],
       },
       {
-        test: /\.css$/,
+        test: /\.(css)$/,
+        exclude: /\.module\.(css)$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -43,13 +44,14 @@ const shared = merge({
       },
     ],
   },
-  plugins: [
-    new ForkTsCheckerWebpackPlugin({
-      async: false,
-      eslint: true,
-    }),
-    new MiniCssExtractPlugin(),
-  ],
+  plugins: DEV
+    ? [
+        new MiniCssExtractPlugin(),
+        new ForkTsCheckerWebpackPlugin({
+          eslint: true,
+        }),
+      ]
+    : [new MiniCssExtractPlugin()],
 });
 
 export default shared;

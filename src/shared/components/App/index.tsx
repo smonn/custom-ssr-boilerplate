@@ -1,10 +1,16 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import './styles.css';
 import Counter from '../Counter';
+import SEO from '../SEO';
+import './styles.css';
 
 function App(): JSX.Element {
-  return <Counter />;
+  return (
+    <>
+      <SEO title="App" />
+      <Counter />
+    </>
+  );
 }
 
 export default hot(App);

@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { Helmet } from 'react-helmet';
 
 const DEV = process.env.NODE_ENV !== 'production';
 const publicPath = DEV ? 'http://localhost:3001/static/' : '/static/';
@@ -49,18 +50,19 @@ export default function renderToHTML<P>({
     </ChunkExtractorManager>
   );
   debug('end renderToString');
+  const helmet = Helmet.renderStatic();
 
   const html = `
   <!DOCTYPE html>
-  <html>
+  <html ${helmet.htmlAttributes.toString()}>
   <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Hello, World</title>
+    ${helmet.title.toString()}
+    ${helmet.meta.toString()}
+    ${helmet.link.toString()}
     ${extractor.getLinkTags(attrs)}
     ${extractor.getStyleTags(attrs)}
   </head>
-  <body>
+  <body ${helmet.bodyAttributes.toString()}>
     <div id="app">${markup}</div>
     ${extractor.getScriptTags(attrs)}
   </body>
