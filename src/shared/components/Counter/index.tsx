@@ -8,7 +8,7 @@ function Counter(): JSX.Element {
     <>
       <button onClick={update(-5)}>--</button>
       <button onClick={update(-1)}>-</button>
-      <span>{count}</span>
+      <span data-testid="count">{count}</span>
       <button onClick={update(1)}>+</button>
       <button onClick={update(5)}>++</button>
     </>

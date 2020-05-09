@@ -3,7 +3,7 @@ import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
 import App from '../shared/components/App';
-import renderHTML from './renderHTML';
+import renderToHTML from './renderToHTML';
 import error from './routes/error';
 import notFound from './routes/notFound';
 
@@ -21,7 +21,7 @@ app.use(
 );
 
 app.get('/*', (req, res, next) => {
-  const { html } = renderHTML({
+  const { html } = renderToHTML({
     entrypoints: ['app'],
     Component: App,
     props: {},

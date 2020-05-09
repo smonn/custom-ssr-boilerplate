@@ -27,13 +27,15 @@ export interface RenderOptions<P> {
 
 export interface RenderResult {
   html: string;
+  status: number;
 }
 
-export default function renderHTML<P>({
+export default function renderToHTML<P>({
   entrypoints,
   Component,
   props,
 }: RenderOptions<P>): RenderResult {
+  const status = 200;
   const extractor = new ChunkExtractor({
     statsFile,
     entrypoints,
@@ -65,5 +67,5 @@ export default function renderHTML<P>({
   </html>
   `;
 
-  return { html };
+  return { status, html };
 }
