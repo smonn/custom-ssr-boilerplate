@@ -25,7 +25,7 @@ const server = merge(shared, {
   },
   externals: [
     webpackNodeExternals({
-      whitelist: ['webpack/hot/signal'],
+      whitelist: DEV ? ['webpack/hot/signal'] : [],
     }),
   ],
   plugins: DEV
