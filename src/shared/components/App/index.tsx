@@ -7,7 +7,7 @@ import './styles.css';
 function App(): JSX.Element {
   return (
     <>
-      <SEO title="App" />
+      <SEO title="App" description="SSR React + Express" />
       <Counter />
     </>
   );

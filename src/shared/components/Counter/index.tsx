@@ -6,15 +6,15 @@ function Counter(): JSX.Element {
   const update = (amount: number) => (): void => setCount((c) => c + amount);
 
   return (
-    <>
-      <button onClick={update(-5)}>--</button>
-      <button onClick={update(-1)}>-</button>
+    <div className="counter">
+      <button onClick={update(-5)}>-5</button>
+      <button onClick={update(-1)}>-1</button>
       <span className="count" data-testid="count">
         {count}
       </span>
-      <button onClick={update(1)}>+</button>
-      <button onClick={update(5)}>++</button>
-    </>
+      <button onClick={update(1)}>+1</button>
+      <button onClick={update(5)}>+5</button>
+    </div>
   );
 }
 

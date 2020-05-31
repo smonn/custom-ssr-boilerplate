@@ -1,3 +1,16 @@
 .count {
-  color: blue;
+  font-size: var(--font-size-lg);
+  min-width: 5.5rem;
+  text-align: center;
+}
+
+.counter {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 0.5rem;
+}
+
+.counter > * + * {
+  margin-left: 0.5rem;
 }

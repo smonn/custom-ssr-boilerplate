@@ -38,6 +38,13 @@ body {
 }
 
 button {
+  background-color: var(--color-black);
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--color-white);
+  cursor: pointer;
   font-family: inherit;
   font-size: inherit;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
 }
