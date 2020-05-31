@@ -1,5 +1,5 @@
-// import express from 'express';
 import http from 'http';
+import http2 from 'http2';
 import debugFactory from 'debug';
 import parsePort from '../shared/utils/parsePort';
 
@@ -20,8 +20,18 @@ if (module.hot) {
   debug('Server-side HMR enabled!');
 }
 
-const server = http.createServer((req, res) => app.handle(req, res));
-// const server = express().use((req, res) => app.handle(req, res));
+let server: http.Server | http2.Http2SecureServer;
+
+if (process.env.NODE_ENV === 'production') {
+  server = http2.createSecureServer((req, res) => app.handle(req, res));
+} else {
+  server = http.createServer((req, res) => app.handle(req, res));
+}
+
+server.on('error', (err) => {
+  debug(err.message);
+});
+
 server.listen(port, () => {
   debug(`Launched at http://localhost:${port}`);
 });

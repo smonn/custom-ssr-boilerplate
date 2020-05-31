@@ -13,6 +13,5 @@ COPY package*.json ./
 RUN npm ci --no-optional --no-audit --no-progress --only=production
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/public ./public
-ENV NODE_ENV=production
 USER node
 CMD ["node", "dist/server.js"]
