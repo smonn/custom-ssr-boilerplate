@@ -40,6 +40,15 @@ const server = merge(shared, {
         }),
       ]
     : [],
+  module: {
+    rules: [
+      {
+        test: /\.(css)$/,
+        exclude: /\.module\.(css)$/,
+        use: ['css-loader'],
+      },
+    ],
+  },
 });
 
 export default server;

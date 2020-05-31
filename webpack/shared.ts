@@ -1,7 +1,6 @@
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import OptimizeCssPlugin from 'optimize-css-assets-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import merge from 'webpack-merge';
 import { DEV } from './constants';
 
@@ -28,30 +27,15 @@ const shared = merge({
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
-      {
-        test: /\.(css)$/,
-        exclude: /\.module\.(css)$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: DEV,
-              reloadAll: true,
-            },
-          },
-          'css-loader',
-        ],
-      },
     ],
   },
   plugins: DEV
     ? [
-        new MiniCssExtractPlugin(),
         new ForkTsCheckerWebpackPlugin({
           eslint: true,
         }),
       ]
-    : [new MiniCssExtractPlugin()],
+    : [],
 });
 
 export default shared;

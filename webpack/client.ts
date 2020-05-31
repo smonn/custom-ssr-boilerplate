@@ -1,4 +1,5 @@
 import LoadableWebpackPlugin from '@loadable/webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import merge from 'webpack-merge';
 import parsePort from '../src/shared/utils/parsePort';
@@ -36,6 +37,7 @@ const client = merge(shared, {
     : undefined,
   plugins: DEV
     ? [
+        new MiniCssExtractPlugin(),
         new LoadableWebpackPlugin({
           // This is required for loadable to pick up the client side assets
           writeToDisk: {
@@ -43,7 +45,34 @@ const client = merge(shared, {
           },
         }),
       ]
-    : [new LoadableWebpackPlugin()],
+    : [new MiniCssExtractPlugin(), new LoadableWebpackPlugin()],
+  module: {
+    rules: [
+      {
+        test: /\.(css)$/,
+        exclude: /\.module\.(css)$/,
+        use: DEV
+          ? [
+              'style-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: { auto: true },
+                },
+              },
+            ]
+          : [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: { auto: true },
+                },
+              },
+            ],
+      },
+    ],
+  },
 });
 
 export default client;
