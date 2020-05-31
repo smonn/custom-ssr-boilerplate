@@ -23,7 +23,7 @@ if (module.hot) {
 let server: http.Server | http2.Http2SecureServer;
 
 if (process.env.NODE_ENV === 'production') {
-  server = http2.createSecureServer((req, res) => app.handle(req, res));
+  server = http2.createSecureServer({}, (req, res) => app.handle(req, res));
 } else {
   server = http.createServer((req, res) => app.handle(req, res));
 }
