@@ -26,6 +26,7 @@ jobs:
     - run: npm run --silent test:ci
 
   deploy:
+    needs: build
     if: ${{ endsWith(github.ref, 'master') }}
     runs-on: ubuntu-latest
     steps:
