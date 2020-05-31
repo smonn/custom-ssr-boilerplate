@@ -1,4 +1,4 @@
-FROM node:alpine AS builder
+FROM node:lts-alpine AS builder
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci --no-optional --no-audit --no-progress
@@ -7,7 +7,7 @@ RUN npm run build:server
 RUN npm run build:client
 
 
-FROM node:alpine AS runtime
+FROM node:lts-alpine AS runtime
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci --no-optional --no-audit --no-progress --only=production
