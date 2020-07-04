@@ -32,7 +32,10 @@ const shared = merge({
   plugins: DEV
     ? [
         new ForkTsCheckerWebpackPlugin({
-          eslint: true,
+          eslint: {
+            enabled: true,
+            files: './src/**/*.{ts,tsx}',
+          },
         }),
       ]
     : [],

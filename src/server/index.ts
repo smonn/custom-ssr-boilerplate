@@ -4,12 +4,14 @@ import parsePort from '../shared/utils/parsePort';
 
 const debug = debugFactory('server:index');
 const port = parsePort(process.env.PORT);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 let app = require('./app').default;
 
 if (module.hot) {
   module.hot.accept('./app', () => {
     debug('HMR reloading `./app`...');
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       app = require('./app').default;
     } catch (err) {
       debug(err);
